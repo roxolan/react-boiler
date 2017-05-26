@@ -1,37 +1,56 @@
 const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
   context: __dirname,
-  entry: './js/BrowserEntry.jsx',
+  entry: {
+    app: './src/App.jsx',
+    vendor: ['react', 'react-dom', 'babel-polyfill']
+  },
   output: {
-    path: path.join(__dirname, '/public'),
-    filename: 'bundle.js'
+    path: path.join(__dirname, '/dist'),
+    filename: 'app.bundle.js'
+  },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'})
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.jsx$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['react', 'es2015']
+          }
+        }
+      },
+      {
+        test: /\.html$/,
+        use: {
+          loader: 'file-loader'
+        }
+      }
+    ]
   },
   resolve: {
-    extensions: ['', '.js', '.jsx', '.json']
+    extensions: ['.js', '.jsx', '.json']
   },
   stats: {
     colors: true,
     reasons: true,
     chunks: false
   },
-  module: {
-    preLoaders: [
-      {
-        test: /\.jsx?$/,
-        loader: 'eslint-loader'
-      }
-    ],
-    loaders: [
-      {
-        test: /\.jsx?$/,
-        loader: 'babel-loader',
-        include: path.join(__dirname, '/js')
+  devServer: {
+    port: 8000,
+    contentBase: 'static',
+    proxy: {
+      '**': {
+        target: 'http://localhost:3000',
       },
-      {
-        test: /\.json$/,
-        loader: 'json-loader'
-      }
-    ]
-  }
+    },
+    historyApiFallback: true,
+  },
+  devtool: 'source-map'
 }
