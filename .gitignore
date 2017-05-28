@@ -41,3 +41,6 @@ jspm_packages
 
 # local org
 react-boiler.org
+
+# all the bundles & their maps
+dist/*bundle*
