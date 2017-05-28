@@ -7,7 +7,7 @@
     "babel:compile": "babel src --presets react,es2015 --out-dir static",
     "babel:watch": "babel src --presets env --out-dir static --watch",
     "lint": "standard",
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server --config webpack.config.js"
   },
   "repository": {
     "type": "git",

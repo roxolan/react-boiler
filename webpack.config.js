@@ -5,7 +5,7 @@ module.exports = {
   context: __dirname,
   entry: {
     app: './src/App.jsx',
-    vendor: ['react', 'react-dom', 'babel-polyfill']
+    vendor: ['react', 'react-dom', 'react-router', 'babel-polyfill']
   },
   output: {
     path: path.join(__dirname, '/dist'),
@@ -44,13 +44,8 @@ module.exports = {
   },
   devServer: {
     port: 8000,
-    contentBase: 'static',
-    proxy: {
-      '**': {
-        target: 'http://localhost:3000',
-      },
-    },
-    historyApiFallback: true,
+    contentBase: path.join(__dirname, '/dist'),
+    historyApiFallback: true
   },
   devtool: 'source-map'
 }

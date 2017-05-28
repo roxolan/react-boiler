@@ -3,7 +3,7 @@ import DOM from 'react-dom'
 
 DOM.render(
   <div>Salve</div>,
-  document.getElementById('react')
+  document.getElementById('app')
 )
 
 console.log('Hoaoo')
